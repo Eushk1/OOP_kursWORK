@@ -1,0 +1,28 @@
+{
+    "users": [
+        {
+            "email": "petr4@example.com",
+            "first_name": "Петр2",
+            "id": 4,
+            "last_name": "Петров1",
+            "role": "Reader",
+            "username": "petrov3"
+        },
+        {
+            "email": "petr@example.com",
+            "first_name": "Петр",
+            "id": 2,
+            "last_name": "Петров",
+            "role": "Reader",
+            "username": "petrov"
+        },
+        {
+            "email": "ivan@example.com",
+            "first_name": "Иван",
+            "id": 1,
+            "last_name": "Иванов",
+            "role": "Admin",
+            "username": "ivanov"
+        }
+    ]
+}
