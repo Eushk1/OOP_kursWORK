@@ -22,7 +22,9 @@ public:
 
     UserRole getRole() const;
     std::string roleToString() const;
-
+    
+    User* getPointer();
+    
     // Методы для получения данных пользователя
     std::string getLastName() const;
     std::string getFirstName() const;

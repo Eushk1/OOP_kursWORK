@@ -20,6 +20,9 @@ public:
     void addUser (int id, const std::string& lastName, const std::string& firstName, const std::string& username, const std::string& email, UserRole role = UserRole::Reader);
     bool userExists(int id) const;
     std::string getUserRole(int id) const;
+    
+    User* getUser(int id);
+
 
     void saveToFile(const std::string& filename) const;
     void loadFromFile(const std::string& filename);

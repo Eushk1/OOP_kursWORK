@@ -17,6 +17,10 @@ UserRole User::getRole() const {
     return role;
 }
 
+User* User::getPointer() {
+        return this; 
+}
+
 std::string User::roleToString() const {
     switch (role) {
         case UserRole::Admin:
