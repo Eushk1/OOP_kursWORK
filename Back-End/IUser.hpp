@@ -20,11 +20,12 @@
 // Интерфейс пользователя
 class UserInterface {
 public:
-    virtual std::vector<Book*> getAvailableBooks(const std::string& searchString) = 0;
-    virtual void reserveBookById(int bookId) = 0;
-    virtual std::vector<Book*> getBooksToReturn() = 0;
+    virtual std::vector<Book*> getAvailableBooks() = 0;
+    virtual std::vector<Book*> getAvailableBooksByTitle(const std::string& searchString) = 0;
+    virtual void borrowBookById(int UserID, int bookId) = 0;
+    virtual std::vector<Book*> getBooksToReturn(int UserID) = 0;
     virtual void returnBookById(int bookId) = 0;
-    virtual std::vector<Book*> getAllUserBooks() = 0;
+    virtual std::vector<Book*> getAllUserBooks(int UserID) = 0;
 
     virtual ~UserInterface() = default; // Виртуальный деструктор
 };

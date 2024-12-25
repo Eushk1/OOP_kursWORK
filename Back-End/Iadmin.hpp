@@ -21,14 +21,12 @@ public:
     virtual std::vector<Book*> getAllLibraryBooks() = 0;
     virtual std::vector<Book*> getBooksByTitle(const std::string& searchString) = 0;
     virtual void deleteBookById(int bookId) = 0;
-    virtual void addBook(const std::string& author, const std::string& title) = 0;
+    virtual void addBook(Book::BookType type,const std::string& author, const std::string& title) = 0;
     virtual void confirmRequest() = 0;
     virtual void denyRequest() = 0;
     virtual int getRequestQueueSize() = 0;
     virtual std::string getFirstRequestDetails() = 0;
-    virtual void pushUserRequest(const std::string& firstName, const std::string& lastName, const std::string& nickname, int userId) = 0;
-    virtual std::string getUserById(int userId) = 0;
-    virtual bool userExists(int userId) = 0;
+    
 
     virtual ~AdminInterface() = default; // Виртуальный деструктор
 };

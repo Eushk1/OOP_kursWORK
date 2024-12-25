@@ -9,14 +9,15 @@
 #define LIBRARY_INTERFACE_H
 
 #include <string>
+#include "UserManager.hpp"
 
 class LibraryInterface {
 public:
-    virtual void pushUserRequest(const std::string& firstName, const std::string& lastName, const std::string& nickname, int userId) = 0;
-    virtual std::string getUserById(int userId) = 0;
+    virtual void pushUserRequest(const int ID, const std::string& firstName, const std::string& lastName, const std::string& nickname, const std::string& email) = 0;
+    virtual User* getUserById(int userId) = 0;
     virtual bool userExists(int userId) = 0;
 
-    virtual ~LibraryInterface() = default; // Виртуальный деструктор
+    virtual ~LibraryInterface() = default; 
 };
 
 #endif // LIBRARY_INTERFACE_H
