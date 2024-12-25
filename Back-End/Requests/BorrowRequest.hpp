@@ -10,15 +10,21 @@
 
 #include "Request.hpp"
 #include <iostream>
+#include "UserManager.hpp"
+#include "Bookshelf.hpp"
 
 class BorrowRequest : public Request {
 public:
-    BorrowRequest(int bookId);
+    BorrowRequest(BookShelf& bookshelf, int UserID, int bookId);
     std::string getInfo() const override;
     void confirm() override;
+    void reject() override;
+
 
 private:
     int bookId;
+    int UserID;
+    BookShelf& bookshelf;
 };
 
 #endif /* BorrowRequest_hpp */

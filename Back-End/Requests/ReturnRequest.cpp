@@ -7,12 +7,16 @@
 
 #include "ReturnRequest.hpp"
 
-ReturnRequest::ReturnRequest(int bookId) : bookId(bookId) {}
+ReturnRequest::ReturnRequest(BookShelf& bookshelf, int bookId) : bookId(bookId), bookshelf(bookshelf) {}
 
 std::string ReturnRequest::getInfo() const {
     return "Сдача книги, ID: " + std::to_string(bookId);
 }
 
 void ReturnRequest::confirm() {
-    std::cout << "Книга с ID " << bookId << " была успешно возвращена." << std::endl;
+    bookshelf.getPhysicalBook(bookId)->setStatus(PhysicalBook::Status::AVAILABLE,-1);
+}
+
+void ReturnRequest::reject(){
+    
 }

@@ -7,14 +7,18 @@
 
 #include "UserRequest.hpp"
 
-UserRequest::UserRequest(const std::string& lastName, const std::string& firstName,
+UserRequest::UserRequest(UserManager& users,const int ID, const std::string& lastName, const std::string& firstName,
                          const std::string& nickname, const std::string& email)
-    : lastName(lastName), firstName(firstName), nickname(nickname), email(email) {}
+    : lastName(lastName), firstName(firstName), nickname(nickname), email(email), users(users), ID(ID) {}
 
 std::string UserRequest::getInfo() const {
-    return "Добавление пользователя: " + lastName + " " + firstName;
+    return "Запрос добавления пользователя: " + lastName + " " + firstName;
 }
 
 void UserRequest::confirm() {
-    std::cout << "Пользователь " << lastName << " " << firstName << " был успешно добавлен." << std::endl;
+    users.addUser(ID, lastName, firstName, nickname, email);
+}
+
+void UserRequest::reject(){
+    
 }

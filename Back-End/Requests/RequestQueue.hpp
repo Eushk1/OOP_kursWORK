@@ -11,17 +11,20 @@
 #include "Request.hpp"
 #include <queue>
 #include <memory>
+#include "Book.hpp"
+#include "Bookshelf.hpp"
+#include "UserManager.hpp"
 
 class RequestQueue{
 public:
-    void addReturnRequest(int bookId);
-    void addBorrowRequest(int bookId);
-    void addUserRequest(const std::string& lastName, const std::string& firstName,
-                        const std::string& nickname, const std::string& email);
+    void addReturnRequest(BookShelf& bookshelf, int bookId);
+    void addBorrowRequest(BookShelf& bookshelf, int UserID, int bookId);
+    void addUserRequest(const UserManager& users, const int ID, const std::string& lastName, const std::string& firstName,
+                                      const std::string& nickname, const std::string& email);
     void confirmRequest();
     void rejectRequest();
     std::string getFirstRequestInfo() const;
-    size_t getRequestCount() const;
+    int getRequestCount() const;
 private:
     std::queue<std::shared_ptr<Request>> requests;
 };

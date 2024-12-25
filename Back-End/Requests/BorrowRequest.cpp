@@ -7,12 +7,17 @@
 
 #include "BorrowRequest.hpp"
 
-BorrowRequest::BorrowRequest(int bookId) : bookId(bookId) {}
+BorrowRequest::BorrowRequest(BookShelf& bookshelf, int UserID, int bookId) : UserID(UserID), bookId(bookId), bookshelf(bookshelf) {}
 
 std::string BorrowRequest::getInfo() const {
-    return "Получение книги, ID: " + std::to_string(bookId);
+    return "Получение книги, ID: " + std::to_string(bookId) + " Пользователем с ID: "+std::to_string(UserID);
 }
 
 void BorrowRequest::confirm() {
-    std::cout << "Книга с ID " << bookId << " была успешно выдана." << std::endl;
+    std::time_t now = std::time(0);
+    bookshelf.getPhysicalBook(bookId)->setStatus(PhysicalBook::Status::UNAVAILABLE,UserID,ctime(&now));
+}
+
+void BorrowRequest::reject(){
+    bookshelf.getPhysicalBook(bookId)->setStatus(PhysicalBook::Status::AVAILABLE,-1);
 }

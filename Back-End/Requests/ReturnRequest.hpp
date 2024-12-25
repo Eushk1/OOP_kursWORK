@@ -10,15 +10,19 @@
 
 #include "Request.hpp"
 #include <iostream>
+#include "UserManager.hpp"
+#include "Bookshelf.hpp"
 
 class ReturnRequest : public Request {
 public:
-    ReturnRequest(int bookId);
+    ReturnRequest(BookShelf& bookshelf, int bookId);
     std::string getInfo() const override;
     void confirm() override;
+    void reject() override;
     
 private:
     int bookId;
+    BookShelf& bookshelf;
 };
 
 #endif /* ReturnRequest_hpp */

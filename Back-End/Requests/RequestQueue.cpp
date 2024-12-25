@@ -9,30 +9,47 @@
 #include "ReturnRequest.hpp"
 #include "BorrowRequest.hpp"
 #include "UserRequest.hpp"
+#include "UserManager.hpp"
+#include "Book.hpp"
 
-void RequestQueue::addReturnRequest(int bookId) {
-    requests.push(std::make_shared<ReturnRequest>(bookId));
+void RequestQueue::addReturnRequest(BookShelf& bookshelf, int bookId) {
+    requests.push(std::make_shared<ReturnRequest>(bookshelf, bookId));
 }
 
-void RequestQueue::addBorrowRequest(int bookId) {
-    requests.push(std::make_shared<BorrowRequest>(bookId));
+void RequestQueue::addBorrowRequest(BookShelf& bookshelf, int UserID, int bookId) {
+    auto book = bookshelf.getBookById(bookId);
+    if (!book) {
+        throw std::runtime_error("Книга не найдена.");
+    }
+    
+    if (book->getType() == Book::BookType::PHYSICAL) {
+        bookshelf.getPhysicalBook(bookId)->setStatus(PhysicalBook::Status::ON_HOLD, UserID);
+        requests.push(std::make_shared<BorrowRequest>(bookshelf, UserID, bookId));
+    } else {
+        bookshelf.getElectronicBook(bookId)->borrowBook(UserID);
+    }
 }
 
-void RequestQueue::addUserRequest(const std::string& lastName, const std::string& firstName,
+void RequestQueue::addUserRequest(const UserManager& users, const int ID, const std::string& lastName, const std::string& firstName,
                                    const std::string& nickname, const std::string& email) {
-    requests.push(std::make_shared<UserRequest>(lastName, firstName, nickname, email));
+    requests.push(std::make_shared<UserRequest>(users, ID, lastName, firstName, nickname, email));
 }
 
 void RequestQueue::confirmRequest() {
     if (!requests.empty()) {
-        requests.front()->confirm(); // Вызываем метод confirm() для первой заявки
-        requests.pop(); // Удаляем первую заявку из очереди
+        requests.front()->confirm();
+        requests.pop();
+    } else {
+        throw std::runtime_error("Нет запросов для подтверждения.");
     }
 }
 
 void RequestQueue::rejectRequest() {
     if (!requests.empty()) {
-        requests.pop(); // Удаляем первую заявку из очереди
+        requests.front()->reject();
+        requests.pop();
+    } else {
+        throw std::runtime_error("Нет запросов для отклонения.");
     }
 }
 
@@ -40,9 +57,9 @@ std::string RequestQueue::getFirstRequestInfo() const {
     if (requests.empty()) {
         return "Очередь пуста.";
     }
-    return requests.front()->getInfo(); // Получаем информацию о первой заявке
+    return requests.front()->getInfo();
 }
 
-size_t RequestQueue::getRequestCount() const {
-    return requests.size(); // Возвращаем количество заявок в очереди
+int RequestQueue::getRequestCount() const {
+    return requests.size();
 }
